@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Anfrage für Aktienkurse</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+            background-color: #f4f4f7;
+            color: #333;
+            padding: 20px;
+        }
+        label, input, button {
+            font-size: 18px;
+            margin: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #fff;
+        }
+        button {
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>API Anfrage für Aktienkurse</h1>
+<label for="stockSymbol">Aktienkürzel:</label>
+<input id="stockSymbol" type="text" placeholder="z.B. AAPL.US">
+<label for="datePicker">Datum:</label>
+<input id="datePicker" type="date">
+<button onclick="performApiRequest()">API Anfrage</button>
+
+
+<table border="1" id="stockData">
+    
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Datum</th>
+            <th>Close</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <!-- Rows will be added here dynamically using JavaScript after the API call -->
+    </tbody>
+</table>
+<script>
+    function performApiRequest() {
+        const stockSymbol = document.getElementById('stockSymbol').value.toUpperCase();
+        const selectedDate = document.getElementById('datePicker').value;
+        
+        // You can add more logic here if needed, for now, it just fetches based on the stock symbol and date
+        const apiUrl = `https://eodhistoricaldata.com/api/eod/${stockSymbol}?api_token=64d7d0670ee1f8.90133693&fmt=json&from=${selectedDate}&to=${selectedDate}`;
+        
+        fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            
+    data.forEach(item => {
+        const row = document.createElement('tr');
+        
+        const nameCell = document.createElement('td');
+        nameCell.textContent = stockSymbol;
+        row.appendChild(nameCell);
+const dateCell = document.createElement('td');
+        dateCell.textContent = item.date;
+        const closeCell = document.createElement('td');
+        closeCell.textContent = item.close;
+        row.appendChild(dateCell);
+        row.appendChild(closeCell);
+        document.getElementById('stockData').querySelector('tbody').appendChild(row);
+    });
+// Handle the fetched data here
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('There was an error fetching the data:', error);
+        });
+    }
+</script>
+
+</body>
+</html>
