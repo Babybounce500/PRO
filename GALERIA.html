@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DOMVS AVREA - Finanzdienstleister</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        p {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+        nav div {
+            margin: 0 10px;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown_label {
+            display: block;
+            font-size: 24px;
+            color: #333;
+            text-decoration: none;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+        .dropdown_label:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DOMVS AVREA O.P.N</h1>
+        <p>AI ART</p>
+    </header>
+
+    <nav>
+        <div class="dropdown">
+            <a href="#" class="dropdown_label">GALERIA</a>
+            <div class="dropdown-content">
+                <a href="https://babybounce500.github.io/B/">ROSENKRANZ</a> <br>
+                <a href="https://Babybounce500.github.io/1a/MARKETMAKER.html">DOMVS AVREA</a><br>
+                <a href="https://Babybounce500.github.io/1a/MARKETMAKER.html">Ted Weissenborn</a><br>
+                <a href="https://Babybounce500.github.io/1a/NFTAuktion.html">NFT Highest Bid</a><br>
+                <a href="https://Babybounce500.github.io/1a/NFT2Auktion.html">NFT Orderbuch</a>
+                
+            </div>
+        </div>
+        <!-- Weitere Navigationselemente können hier hinzugefügt werden -->
+    </nav>
+
+    <script>
+        // Öffnet das Dropdown-Menü beim Klick auf "COMMERCIUM"
+        document.querySelector('.dropdown_label').addEventListener('click', function() {
+            const dropdownContent = this.nextElementSibling;
+            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+        });
+    </script>
+</body>
+</html>
