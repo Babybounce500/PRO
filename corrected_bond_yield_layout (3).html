@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Effektive Rendite der Anleihe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+            line-height: 1.6;
+            background-color: #f4f4f7;
+            color: #333;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        h1, h2 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        label, select, input, button {
+            font-size: 18px;
+            margin-right: 10px;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #fff;
+            display: block;
+            margin-top: 10px;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 600px) {
+            label, select, input, button {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <h1>Effektive Rendite der Anleihe</h1>
+    <div style="margin-bottom: 20px;">
+        <label for="nennwert">Nennwert:</label>
+        <input type="number" id="nennwert" value="100">
+        <label for="laufzeit">Laufzeit (Jahre):</label>
+        <input type="number" id="laufzeit" value="1">
+        <label for="zinssatz">Zinssatz (%):</label>
+        <input type="number" id="zinssatz" value="5">
+        <label for="emissionspreis">Emissionspreis:</label>
+        <input type="number" id="emissionspreis" value="100">
+        <label for="rueckzahlungspreis">Rückzahlungspreis:</label>
+        <input type="number" id="rueckzahlungspreis" value="100">
+        <label for="zinszahlungsfrequenz">Zinszahlungsfrequenz:</label>
+        <input type="number" id="zinszahlungsfrequenz" value="1">
+        <label for="spread">Spread:</label>
+        <input type="number" id="spread" value="1">
+        <button onclick="calculateBond()">Effektive Rendite berechnen</button>
+    </div>
+    
+
+<!-- The provided code goes here -->
+<p>Effektive Rendite der Anleihe: <span id="yield">-</span></p>
+
+
+<script>
+    function calculateBond() {
+        let nennwert = parseFloat(document.getElementById("nennwert").value);
+        let laufzeit = parseFloat(document.getElementById("laufzeit").value);
+        let zinssatz = parseFloat(document.getElementById("zinssatz").value);
+        let emissionspreis = parseFloat(document.getElementById("emissionspreis").value);
+        let rueckzahlungspreis = parseFloat(document.getElementById("rueckzahlungspreis").value);
+        let zinszahlungsfrequenz = parseFloat(document.getElementById("zinszahlungsfrequenz").value);
+        let spread = parseFloat(document.getElementById("spread").value);
+
+        let zinszahlung = nennwert * zinssatz / 100;
+        let durchschnittlicherJahresertrag = (zinszahlung * zinszahlungsfrequenz + (rueckzahlungspreis - emissionspreis) / laufzeit) / laufzeit;
+        let durchschnittlicherJahrespreis = (emissionspreis + rueckzahlungspreis) / 2;
+        let effektiveRendite = durchschnittlicherJahresertrag / durchschnittlicherJahrespreis * 100 + spread;
+
+        document.getElementById("yield").innerText = effektiveRendite.toFixed(2) + "%";
+    }
+</script>
+
+        // Hier können Sie eine Formel für die Anleiheberechnung basierend auf den oben genannten Kennzahlen hinzufügen.
+        // Als einfaches Beispiel für die effektive Rendite:
+        let nennwert = parseFloat(document.getElementById("nennwert").value);
+        let laufzeit = parseFloat(document.getElementById("laufzeit").value);
+        let zinssatz = parseFloat(document.getElementById("zinssatz").value);
+        let emissionspreis = parseFloat(document.getElementById("emissionspreis").value);
+        let rueckzahlungspreis = parseFloat(document.getElementById("rueckzahlungspreis").value);
+        let zinszahlungsfrequenz = parseFloat(document.getElementById("zinszahlungsfrequenz").value);
+        let spread = parseFloat(document.getElementById("spread").value);
+
+        let zinszahlung = nennwert * zinssatz / 100;
+        let durchschnittlicherJahresertrag = (zinszahlung * zinszahlungsfrequenz + (rueckzahlungspreis - emissionspreis) / laufzeit);
+        let durchschnittlicherJahrespreis = (emissionspreis + rueckzahlungspreis) / 2;
+        let effektiveRendite = durchschnittlicherJahresertrag / durchschnittlicherJahrespreis * 100 + spread;
+
+        document.getElementById("yield").innerText = effektiveRendite.toFixed(2) + "%";
+    }
+</script>
+
+</body>
+</html>
