@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="de">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Linienchart mit Schlusskursen
+  </title>
+  <!-- Fügen Sie die Google Charts API hinzu -->
+  <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 20px;
+            line-height: 1.6;
+            background-color: #f4f4f7;
+            color: #333;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            font-size: 22px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            padding: 10px 0;
+            position: relative;
+            font-weight: 500;
+        }
+        
+        li:before {
+            content: '\2022';
+            color: #3498db;
+            font-size: 30px;
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+  </style>
+ </head>
+ <body>
+  <h1>
+   CHARTUS LIMES API
+  </h1>
+  <label for="stockSymbol">
+   Aktiensymbol eingeben:
+  </label>
+  <input id="stockSymbol" placeholder="z.B. AAPL.US" type="text"/>
+  <label for="timeframe">
+   Zeitraum:
+  </label>
+  <select id="timeframe">
+   <option value="d">
+    Tage
+   </option>
+   <option value="w">
+    Wochen
+   </option>
+   <option value="m">
+    Monate
+   </option>
+  </select>
+  <button onclick="drawChart()">
+   Chart anzeigen
+  </button>
+  <!-- Fügen Sie ein DIV für den Linienchart hinzu -->
+  <div id="line_chart_div" style="width: 600px; height: 400px;">
+  </div>
+  <h2>
+   Schlusskurse
+  </h2>
+  <table border="1">
+   <thead>
+    <tr>
+     <th>
+      Zeitraum
+     </th>
+     <th>
+      Schlusskurs
+     </th>
+    </tr>
+   </thead>
+   <tbody id="close_data_table">
+    <!-- Die Daten werden hier eingefügt -->
+   </tbody>
+  </table>
+  <script>
+   // Lade Google Charts API
+    google.charts.load('current', {'packages':['corechart']});
+
+    function drawChart() {
+        const stockSymbol = document.getElementById('stockSymbol').value.toUpperCase();
+        const timeframe = document.getElementById('timeframe').value;
+
+        // Berechnen Sie das Start- und Enddatum basierend auf dem gewählten Zeitraum
+        const today = new Date();
+        let startDate, endDate;
+        if (timeframe === 'd') {
+            startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 3); // 3 Tage zurück
+            endDate = today;
+        } else if (timeframe === 'w') {
+            startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 21); // 3 Wochen zurück
+            endDate = today;
+        } else if (timeframe === 'm') {
+            startDate = new Date(today.getFullYear(), today.getMonth() - 3, today.getDate()); // 3 Monate zurück
+            endDate = today;
+        }
+
+        // Führen Sie die API-Anfrage durch, um die Kursdaten zu erhalten
+        fetch(`https://eodhistoricaldata.com/api/eod/${stockSymbol}?api_token=64d7d0670ee1f8.90133693&fmt=json&from=${startDate.toISOString().split('T')[0]}&to=${endDate.toISOString().split('T')[0]}&period=${timeframe}`)
+        .then(response => response.json())
+        .then(data => {
+            const closeData = data.map(item => {
+                return [item.date, parseFloat(item.close)];
+            });
+
+            const dataTable = new google.visualization.DataTable();
+            dataTable.addColumn('string', 'Zeitraum');
+            dataTable.addColumn('number', 'Schlusskurs');
+            dataTable.addRows(closeData);
+
+            const options = {
+                legend: 'none'
+            };
+
+            const chart = new google.visualization.LineChart(document.getElementById('line_chart_div'));
+            chart.draw(dataTable, options);
+
+            // Füllen Sie die Tabelle mit den Schlusskursen
+            const tableBody = document.getElementById('close_data_table');
+            tableBody.innerHTML = '';
+
+            closeData.forEach(close => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${close[0]}</td>
+                    <td>${close[1]}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error('Es gab einen Fehler beim Abrufen der Daten:', error);
+        });
+    }
+  </script>
+ </body>
+</html>
