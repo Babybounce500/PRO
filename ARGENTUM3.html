@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Anfrage für Aktienkurse</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+            background-color: #f4f4f7;
+            color: #333;
+            padding: 20px;
+        }
+        label, input, button {
+            font-size: 18px;
+            margin: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #fff;
+        }
+        button {
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>API Anfrage für Aktienkurse</h1>
+<label for="stockSymbol">Aktienkürzel:</label>
+<input id="stockSymbol" type="text" placeholder="z.B. AAPL.US">
+<label for="datePicker">Datum:</label>
+<input id="datePicker" type="date">
+<button onclick="performApiRequest()">API Anfrage</button>
+
+
+<table border="1" id="stockData">
+    
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Datum</th>
+            <th>Close</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <!-- Rows will be added here dynamically using JavaScript after the API call -->
+    </tbody>
+</table>
+<script>
+    function performApiRequest() {
+        const stockSymbol = document.getElementById('stockSymbol').value.toUpperCase();
+        const selectedDate = document.getElementById('datePicker').value;
+        
+        // You can add more logic here if needed, for now, it just fetches based on the stock symbol and date
+        const apiUrl = `https://eodhistoricaldata.com/api/eod/${stockSymbol}?api_token=64d7d0670ee1f8.90133693&fmt=json&from=${selectedDate}&to=${selectedDate}`;
+        
+        fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            
+    data.forEach(item => {
+        const row = document.createElement('tr');
+        
+        const nameCell = document.createElement('td');
+        nameCell.textContent = stockSymbol;
+        row.appendChild(nameCell);
+const dateCell = document.createElement('td');
+        dateCell.textContent = item.date;
+        const closeCell = document.createElement('td');
+        closeCell.textContent = item.close;
+        row.appendChild(dateCell);
+        row.appendChild(closeCell);
+        document.getElementById('stockData').querySelector('tbody').appendChild(row);
+    });
+// Handle the fetched data here
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('There was an error fetching the data:', error);
+        });
+    }
+</script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ARGENTUM & CONSULTUS Analyse</title>
+    <style>
+        .container {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+    <script>
+        function analyseSpreads() {
+            var indexA = parseFloat(document.getElementById("indexA").value);
+            var stockB = parseFloat(document.getElementById("stockB").value);
+            var indexC = parseFloat(document.getElementById("indexC").value);
+            var stockD = parseFloat(document.getElementById("stockD").value);
+            var indexE = parseFloat(document.getElementById("indexE").value);
+            var stockF = parseFloat(document.getElementById("stockF").value);
+
+            // Calculate the Spreads using division
+            var spreadA = indexA / stockB;
+            var spreadB = indexC / stockD;
+            var spreadC = indexE / stockF;
+
+            // Determine the trading recommendation based on spreadA and spreadC
+            var recommendation;
+            if (spreadA > spreadC) {
+                recommendation = "SHORT";
+            } else if (spreadA < spreadC) {
+                recommendation = "LONG";
+            } else {
+                recommendation = "NEUTRAL";
+            }
+
+            document.getElementById("result").innerHTML = "Spread A: " + spreadA.toFixed(2) + ", Spread B: " + spreadB.toFixed(2) + ", Spread C: " + spreadC.toFixed(2) + "<br>Recommendation: " + recommendation;
+        }
+    </script>
+</head>
+
+<body>
+    <h1>
+        ARGENTUM Intermarket Spreads
+    </h1>
+    <form>
+        <label for="indexA">Kurs A des Index:</label>
+        <input id="indexA" step="0.01" type="number" value="120" />
+        <br />
+        <label for="stockB">Kurs B der Aktie:</label>
+        <input id="stockB" step="0.01" type="number" value="60" />
+        <br />
+        <label for="indexC">Kurs C des Index:</label>
+        <input id="indexC" step="0.01" type="number" value="180" />
+        <br />
+        <label for="stockD">Kurs D der Aktie:</label>
+        <input id="stockD" step="0.01" type="number" value="90" />
+        <br />
+        <label for="indexE">Kurs E des Index:</label>
+        <input id="indexE" step="0.01" type="number" value="240" />
+        <br />
+        <label for="stockF">Kurs F der Aktie:</label>
+        <input id="stockF" step="0.01" type="number" value="80" />
+        <br />
+        <button onclick="analyseSpreads()" type="button">Analysieren</button>
+    </form>
+    <h2>Ergebnis:</h2>
+    <p id="result"></p>
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line Chart</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        
+        function drawChart() {
+            const closeC = parseFloat(document.getElementById("closeC").value);
+            const closeB = parseFloat(document.getElementById("closeB").value);
+            const closeA = parseFloat(document.getElementById("closeA").value);
+
+            var data = google.visualization.arrayToDataTable([
+                ['Close', 'Price', { role: 'style' }],
+                ['Close C', closeC, 'black'],
+                ['Close B', closeB, 'black'],
+                ['Close A', closeA, 'black']
+            ]);
+
+            var options = {
+                title: 'Closing Prices',
+                legend: { position: 'bottom' },
+                hAxis: {
+                    title: 'Close'
+                },
+                vAxis: {
+                    title: 'Price'
+                }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+    <h2>Enter Closing Prices</h2>
+    <table>
+        <tr>
+            <td>Close C:</td>
+            <td><input type="number" id="closeC" value="100"></td>
+        </tr>
+        <tr>
+            <td>Close B:</td>
+            <td><input type="number" id="closeB" value="105"></td>
+        </tr>
+        <tr>
+            <td>Close A:</td>
+            <td><input type="number" id="closeA" value="103"></td>
+        </tr>
+    </table>
+    <button onclick="drawChart()">Draw Chart</button>
+    <div id="chart_div" style="width: 600px; height: 400px;"></div>
+</body><br>Kurs A entspricht dem letzten Close des Index. <br>
+Kurs B entspricht dem letzten Close der Aktie.<br>
+Kurs C entspricht den vorletzten Close des Index <br>
+Kurs D entspricht dem vorletzten Close der Aktie <br>
+Kurs E entspricht dem drittletzten Close des Index<br>
+Kurs F entspricht dem drittletzten Close der Aktie<br>
+Spread C ist drittletzter Spread <br>
+Spread B ist vorletzter Spread <br>
+Spread A ist aktueller Spread <br>
+Recommendation bezieht sich auf den Trend der Aktie <br>
+LONG = Aktie kaufen / SHORT = Aktie verkaufen
+</html>
