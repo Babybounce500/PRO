@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vokabeltest</title>
+<script>
+        var vocabulary = [
+            { deutsch: "Haus", englisch: "house" },
+            { deutsch: "Auto", englisch: "car" },
+            { deutsch: "Apfel", englisch: "apple" },
+            
+    { deutsch: "Buch", englisch: "book" },
+    { deutsch: "Tisch", englisch: "table" },
+    { deutsch: "Stuhl", englisch: "chair" },
+    { deutsch: "Fenster", englisch: "window" },
+    { deutsch: "Tür", englisch: "door" },
+    { deutsch: "Wand", englisch: "wall" },
+    { deutsch: "Dach", englisch: "roof" },
+    { deutsch: "Tisch", englisch: "table" },
+    { deutsch: "Stuhl", englisch: "chair" },
+    { deutsch: "Fenster", englisch: "window" },
+    { deutsch: "Tür", englisch: "door" },
+    { deutsch: "Bild", englisch: "picture" },
+    { deutsch: "Musik", englisch: "music" },
+    { deutsch: "Freund", englisch: "friend" },
+    { deutsch: "Wasser", englisch: "water" },
+    { deutsch: "Essen", englisch: "food" },
+    { deutsch: "Trinken", englisch: "drink" },
+    { deutsch: "Spielen", englisch: "play" },
+    { deutsch: "Arbeiten", englisch: "work" },
+    { deutsch: "Garten", englisch: "garden" },
+    { deutsch: "Baum", englisch: "tree" },
+    { deutsch: "Blume", englisch: "flower" },
+    { deutsch: "Fahrrad", englisch: "bicycle" },
+    { deutsch: "Himmel", englisch: "sky" },
+    { deutsch: "Sonne", englisch: "sun" },
+    { deutsch: "Mond", englisch: "moon" },
+    { deutsch: "Stern", englisch: "star" },
+    { deutsch: "Meer", englisch: "sea" },
+    { deutsch: "Berg", englisch: "mountain" },
+    { deutsch: "Fluss", englisch: "river" },
+    { deutsch: "Wald", englisch: "forest" },
+    { deutsch: "Weg", englisch: "path" },
+    { deutsch: "Feld", englisch: "field" },
+    { deutsch: "Regen", englisch: "rain" },
+    { deutsch: "Schnee", englisch: "snow" },
+    { deutsch: "Wind", englisch: "wind" },
+    { deutsch: "Vogel", englisch: "bird" },
+    { deutsch: "Fisch", englisch: "fish" },
+    { deutsch: "Tier", englisch: "animal" },
+    { deutsch: "Flugzeug", englisch: "plane" },
+    { deutsch: "Zug", englisch: "train" },
+    { deutsch: "Boot", englisch: "boat" },
+    { deutsch: "Auto", englisch: "car" },
+    { deutsch: "Bus", englisch: "bus" },
+    { deutsch: "Straße", englisch: "street" },
+    { deutsch: "Brücke", englisch: "bridge" },
+    { deutsch: "Krankenhaus", englisch: "hospital" },
+    { deutsch: "Bibliothek", englisch: "library" },
+    { deutsch: "Restaurant", englisch: "restaurant" },
+    { deutsch: "Kino", englisch: "cinema" },
+    { deutsch: "Theater", englisch: "theater" },
+    { deutsch: "Museum", englisch: "museum" },
+    { deutsch: "Park", englisch: "park" },
+    { deutsch: "Schwimmbad", englisch: "swimming pool" },
+    { deutsch: "Strand", englisch: "beach" },
+    { deutsch: "Berg", englisch: "mountain" },
+    { deutsch: "Tal", englisch: "valley" },
+    { deutsch: "Wüste", englisch: "desert" },
+    { deutsch: "Insel", englisch: "island" },
+    { deutsch: "Universität", englisch: "university" },
+    { deutsch: "Schlüssel", englisch: "key" },
+    { deutsch: "Telefon", englisch: "phone" },
+    { deutsch: "Uhr", englisch: "watch" },
+    { deutsch: "Brille", englisch: "glasses" },
+    { deutsch: "Hut", englisch: "hat" },
+    { deutsch: "Hemd", englisch: "shirt" },
+    { deutsch: "Hose", englisch: "pants" },
+    { deutsch: "Schuh", englisch: "shoe" },
+    { deutsch: "Handschuh", englisch: "glove" },
+    { deutsch: "Regenschirm", englisch: "umbrella" },
+    { deutsch: "Tasche", englisch: "bag" },
+    { deutsch: "Büro", englisch: "office" },
+    { deutsch: "Fabrik", englisch: "factory" },
+    { deutsch: "Geschäft", englisch: "store" },
+    { deutsch: "Bank", englisch: "bank" },
+    { deutsch: "Hotel", englisch: "hotel" },
+    { deutsch: "Flughafen", englisch: "airport" },
+    { deutsch: "Bahnhof", englisch: "station" },
+    { deutsch: "Hafen", englisch: "port" },
+    { deutsch: "Küche", englisch: "kitchen" },
+    { deutsch: "Badezimmer", englisch: "bathroom" },
+    { deutsch: "Schlafzimmer", englisch: "bedroom" },
+    { deutsch: "Wohnzimmer", englisch: "living room" },
+    { deutsch: "Garten", englisch: "garden" },
+    { deutsch: "Garage", englisch: "garage" },
+    { deutsch: "Keller", englisch: "basement" },
+    { deutsch: "Dach", englisch: "roof" },
+    { deutsch: "Wand", englisch: "wall" },
+    { deutsch: "Fußboden", englisch: "floor" },
+    { deutsch: "Decke", englisch: "ceiling" },
+    { deutsch: "Fenster", englisch: "window" },
+    { deutsch: "Tür", englisch: "door" },
+    { deutsch: "Stuhl", englisch: "chair" },
+    { deutsch: "Tisch", englisch: "table" },
+    { deutsch: "Schrank", englisch: "cabinet" },
+    { deutsch: "Sofa", englisch: "sofa" },
+    { deutsch: "Lampe", englisch: "lamp" },
+    { deutsch: "Fernseher", englisch: "television" },
+    { deutsch: "Kühlschrank", englisch: "refrigerator" },
+    { deutsch: "gehen", englisch: "go" },
+    { deutsch: "sehen", englisch: "see" },
+    { deutsch: "sprechen", englisch: "speak" },
+    { deutsch: "hören", englisch: "hear" },
+    { deutsch: "fühlen", englisch: "feel" },
+    { deutsch: "essen", englisch: "eat" },
+    { deutsch: "trinken", englisch: "drink" },
+    { deutsch: "schlafen", englisch: "sleep" },
+    { deutsch: "fahren", englisch: "drive" },
+    { deutsch: "schreiben", englisch: "write" },
+    { deutsch: "lesen", englisch: "read" },
+    { deutsch: "spielen", englisch: "play" },
+    { deutsch: "arbeiten", englisch: "work" },
+    { deutsch: "lernen", englisch: "learn" },
+    { deutsch: "laufen", englisch: "run" },
+    { deutsch: "springen", englisch: "jump" },
+    { deutsch: "tanzen", englisch: "dance" },
+    { deutsch: "singen", englisch: "sing" },
+    { deutsch: "schwimmen", englisch: "swim" },
+    { deutsch: "fliegen", englisch: "fly" },
+    { deutsch: "kaufen", englisch: "buy" },
+    { deutsch: "verkaufen", englisch: "sell" },
+    { deutsch: "nehmen", englisch: "take" },
+    { deutsch: "geben", englisch: "give" },
+    { deutsch: "finden", englisch: "find" },
+    { deutsch: "verlieren", englisch: "lose" },
+    { deutsch: "beginnen", englisch: "begin" },
+    { deutsch: "enden", englisch: "end" },
+    { deutsch: "bauen", englisch: "build" },
+    { deutsch: "zerstören", englisch: "destroy" },
+    { deutsch: "helfen", englisch: "help" },
+    { deutsch: "fragen", englisch: "ask" },
+    { deutsch: "antworten", englisch: "answer" },
+    { deutsch: "erklären", englisch: "explain" },
+    { deutsch: "zeigen", englisch: "show" },
+    { deutsch: "verstecken", englisch: "hide" },
+    { deutsch: "öffnen", englisch: "open" },
+    { deutsch: "schließen", englisch: "close" },
+    { deutsch: "lächeln", englisch: "smile" },
+    { deutsch: "weinen", englisch: "cry" },
+    { deutsch: "sitzen", englisch: "sit" },
+    { deutsch: "stehen", englisch: "stand" },
+    { deutsch: "liegen", englisch: "lie" },
+    { deutsch: "fallen", englisch: "fall" },
+    { deutsch: "steigen", englisch: "climb" },
+    { deutsch: "reisen", englisch: "travel" },
+    { deutsch: "kochen", englisch: "cook" },
+    { deutsch: "waschen", englisch: "wash" },
+    { deutsch: "zeichnen", englisch: "draw" },
+    { deutsch: "malen", englisch: "paint" },
+    { deutsch: "schneiden", englisch: "cut" },
+    { deutsch: "kleben", englisch: "stick" },
+    { deutsch: "nähen", englisch: "sew" },
+    { deutsch: "pflanzen", englisch: "plant" },
+    { deutsch: "ernten", englisch: "harvest" },
+    { deutsch: "fischen", englisch: "fish" },
+    { deutsch: "jagen", englisch: "hunt" },
+    { deutsch: "schwimmen", englisch: "swim" },
+    { deutsch: "tauchen", englisch: "dive" },
+    { deutsch: "fliegen", englisch: "fly" },
+    { deutsch: "groß", englisch: "big" },
+    { deutsch: "klein", englisch: "small" },
+    { deutsch: "lang", englisch: "long" },
+    { deutsch: "kurz", englisch: "short" },
+    { deutsch: "schnell", englisch: "fast" },
+    { deutsch: "langsam", englisch: "slow" },
+    { deutsch: "schön", englisch: "beautiful" },
+    { deutsch: "hässlich", englisch: "ugly" },
+    { deutsch: "jung", englisch: "young" },
+    { deutsch: "alt", englisch: "old" },
+    { deutsch: "heiß", englisch: "hot" },
+    { deutsch: "kalt", englisch: "cold" },
+    { deutsch: "leicht", englisch: "easy" },
+    { deutsch: "schwer", englisch: "difficult" },
+    { deutsch: "hell", englisch: "bright" },
+    { deutsch: "dunkel", englisch: "dark" },
+    { deutsch: "weich", englisch: "soft" },
+    { deutsch: "hart", englisch: "hard" },
+    { deutsch: "nass", englisch: "wet" },
+    { deutsch: "trocken", englisch: "dry" },
+
+    // Füge hier weitere Vokabeln hinzu
+];
+
+        
+
+        function loadRandomWords() {
+    var randomIndices = [];
+    while (randomIndices.length < 10) { // Ändere die Anzahl der geladenen Vokabeln auf 10
+        var randomIndex = Math.floor(Math.random() * vocabulary.length);
+        if (!randomIndices.includes(randomIndex)) {
+            randomIndices.push(randomIndex);
+        }
+    }
+
+    for (var i = 0; i < randomIndices.length; i++) {
+        document.getElementById("deutsch" + (i + 1)).value = vocabulary[randomIndices[i]].deutsch;
+        document.getElementById("englisch" + (i + 1)).value = ''; // Setzt das englische Feld zurück
+    }
+}
+
+        function checkAnswers() {
+            var errors = 0;
+
+            for (var i = 0; i < 3; i++) {
+                var deutsch = document.getElementById("deutsch" + (i + 1)).value;
+                var englisch = vocabulary.find(v => v.deutsch === deutsch).englisch;
+                var userTranslation = document.getElementById("englisch" + (i + 1)).value.trim().toLowerCase();
+
+                if (userTranslation !== englisch.toLowerCase()) {
+                    errors++;
+                }
+            }
+
+            var grade;
+            if (errors === 0) {
+                grade = 1;
+            } else if (errors === 1) {
+                grade = 2;
+            } else if (errors === 2) {
+                grade = 3;
+            } else if (errors === 3) {
+                grade = 4;
+            } else {
+                grade = 5;
+            }
+
+            document.getElementById("result").innerHTML = "Note: " + grade;
+        }
+    </script>
+</head>
+<body>
+<h1>Vokabeltest Deutsch - Englisch</h1>
+<button onclick="loadRandomWords()" type="button">Zufällige Wörter laden</button>
+<form>
+<table>
+<tr>
+<th>Deutsch</th>
+<th>Englisch</th>
+</tr>
+<tr>
+<td><input id="deutsch1" readonly="" type="text"/></td>
+<td><input id="englisch1" type="text"/></td>
+</tr>
+<tr>
+<td><input id="deutsch2" readonly="" type="text"/></td>
+<td><input id="englisch2" type="text"/></td>
+</tr>
+<tr>
+<td><input id="deutsch3" readonly="" type="text"/></td>
+<td><input id="englisch3" type="text"/></td>
+</tr>
+<tr><td><input id="deutsch4" readonly="" type="text"/></td><td><input id="englisch4" type="text"/></td></tr><tr><td><input id="deutsch5" readonly="" type="text"/></td><td><input id="englisch5" type="text"/></td></tr><tr><td><input id="deutsch6" readonly="" type="text"/></td><td><input id="englisch6" type="text"/></td></tr><tr><td><input id="deutsch7" readonly="" type="text"/></td><td><input id="englisch7" type="text"/></td></tr><tr><td><input id="deutsch8" readonly="" type="text"/></td><td><input id="englisch8" type="text"/></td></tr><tr><td><input id="deutsch9" readonly="" type="text"/></td><td><input id="englisch9" type="text"/></td></tr><tr><td><input id="deutsch10" readonly="" type="text"/></td><td><input id="englisch10" type="text"/></td></tr></table>
+<br/>
+<button onclick="checkAnswers()" type="button">Auswerten</button>
+</form>
+<div id="result"></div>
+</body>
+</html>
