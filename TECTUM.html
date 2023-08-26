@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Anfrage für Aktienkurse</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+            background-color: #f4f4f7;
+            color: #333;
+            padding: 20px;
+        }
+        label, input, button {
+            font-size: 18px;
+            margin: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #fff;
+        }
+        button {
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>API Anfrage für Aktienkurse</h1>
+<label for="stockSymbol">Aktienkürzel:</label>
+<input id="stockSymbol" type="text" placeholder="z.B. AAPL.US">
+<label for="datePicker">Datum:</label>
+<input id="datePicker" type="date">
+<button onclick="performApiRequest()">API Anfrage</button>
+
+<table border="1" id="stockData">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Datum</th>
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Close</th>
+            <th>Volume</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Data will populate here -->
+    </tbody>
+</table>
+
+<script>
+    function performApiRequest() {
+        const stockSymbol = document.getElementById('stockSymbol').value.toUpperCase();
+        const selectedDate = document.getElementById('datePicker').value;
+        
+        const apiUrl = `https://eodhistoricaldata.com/api/eod/${stockSymbol}?api_token=64d7d0670ee1f8.90133693&fmt=json&from=${selectedDate}&to=${selectedDate}`;
+        
+        fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.getElementById('stockData').querySelector('tbody');
+            // Existing rows are retained  // Clear existing rows
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                ['name', 'date', 'open', 'high', 'low', 'close', 'volume'].forEach(key => {
+                    const cell = document.createElement('td');
+                    cell.textContent = key === "name" ? stockSymbol : (item[key] || '-');
+                    row.appendChild(cell);
+                });
+                tbody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error('There was an error fetching the data:', error);
+        });
+    }
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Volume Analysis</title>
+    <script>
+        function analyzeVolume() {
+            // Get the volume values from the table
+            var volumeA = parseInt(document.getElementById('volumeA').value);
+            var volumeB = parseInt(document.getElementById('volumeB').value);
+            var volumeC = parseInt(document.getElementById('volumeC').value);
+            
+            // Initialize result variable
+            var result = "NO";
+            
+            // Check the conditions
+            if (volumeB > volumeA && volumeB > volumeC) {
+                result = "GO";
+            }
+            
+            // Display the result
+            document.getElementById('result').innerHTML = result;
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Stock Volume Analysis</h1>
+    
+    <table border="1">
+        <tr>
+            <th>Volume A</th>
+            <th>Volume B</th>
+            <th>Volume C</th>
+        </tr>
+        <tr>
+            <td><input type="number" id="volumeA"></td>
+            <td><input type="number" id="volumeB"></td>
+            <td><input type="number" id="volumeC"></td>
+        </tr>
+    </table>
+    
+    <button onclick="analyzeVolume()">Analyze</button>
+    
+    <p>Result: <span id="result"></span></p>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quote Analysis</title>
+</head>
+<body>
+    <h1>Quote Analysis Table</h1>
+    
+    <table border="1">
+        <tr>
+            <th>Quote A</th>
+            <th>Quote B</th>
+            <th>Quote C</th>
+            <th>Trading Action</th>
+        </tr>
+        <tr>
+            <td><input type="text" id="quoteA"></td>
+            <td><input type="text" id="quoteB"></td>
+            <td><input type="text" id="quoteC"></td>
+            <td><button onclick="analyzeQuotes()">Analyze</button></td>
+        </tr>
+    </table>
+    
+    <p id="result"></p>
+
+    <script>
+        function analyzeQuotes() {
+            var quoteA = parseFloat(document.getElementById("quoteA").value);
+            var quoteB = parseFloat(document.getElementById("quoteB").value);
+            var quoteC = parseFloat(document.getElementById("quoteC").value);
+            var result = "";
+            
+            if (isNaN(quoteA) || isNaN(quoteB) || isNaN(quoteC)) {
+                result = "Please enter valid numeric values for Quote A, Quote B, and Quote C.";
+            } else {
+                if (quoteA > quoteB && quoteB < quoteC) {
+                    result = "Action: LONG";
+                } else if (quoteA < quoteB && quoteB > quoteC) {
+                    result = "Action: SHORT";
+                } else {
+                    result = "Action: NO";
+                }
+            }
+            
+            document.getElementById("result").textContent = result;
+        }
+    </script>
+</body>
+</html>
+
