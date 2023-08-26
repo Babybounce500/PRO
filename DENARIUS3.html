@@ -1,0 +1,608 @@
+
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>API Anfrage für Aktienkurse</title>
+<style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+            background-color: #f4f4f7;
+            color: #333;
+            padding: 20px;
+        }
+        label, input, button {
+            font-size: 18px;
+            margin: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #fff;
+        }
+        button {
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/><style>
+/* Mobile optimization */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+    label, input, button {
+        font-size: 16px;
+        margin: 5px;
+        padding: 5px;
+    }
+}
+</style></head>
+<body>
+<h1>DENARIUS API</h1>
+<label for="stockSymbol">Aktienkürzel:</label>
+<input id="stockSymbol" placeholder="z.B. AAPL.US" type="text"/>
+<label for="datePicker">Datum:</label>
+<input id="datePicker" type="date"/>
+<button onclick="performApiRequest()">API Anfrage</button>
+<table border="1" id="stockData">
+<thead>
+<tr>
+<th>Name</th>
+<th>Datum</th>
+<th>Open</th>
+<th>High</th>
+<th>Low</th>
+<th>Close</th>
+<th>Volume</th>
+</tr>
+</thead>
+<tbody>
+<!-- Data will populate here -->
+</tbody>
+</table>
+<script>
+    function performApiRequest() {
+        const stockSymbol = document.getElementById('stockSymbol').value.toUpperCase();
+        const selectedDate = document.getElementById('datePicker').value;
+        
+        const apiUrl = `https://eodhistoricaldata.com/api/eod/${stockSymbol}?api_token=64d7d0670ee1f8.90133693&fmt=json&from=${selectedDate}&to=${selectedDate}`;
+        
+        fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.getElementById('stockData').querySelector('tbody');
+            
+    const kursspanneTbody = document.getElementById('kursspanneData').querySelector('tbody');
+    kursspanneTbody.innerHTML = ''; // Clear previous results
+    
+    data.forEach(item => {
+        const kursspanneRow = document.createElement('tr');
+        const kursspanneValue = (parseFloat(item.high) - parseFloat(item.low)).toFixed(2);
+        
+        
+        const symbolCell = document.createElement('td');
+        symbolCell.textContent = stockSymbol;
+        kursspanneRow.insertBefore(symbolCell, kursspanneRow.firstChild);
+
+        const nameCell = document.createElement('td');
+        nameCell.textContent = item.name;
+        kursspanneRow.appendChild(nameCell);
+        
+        const dateCell = document.createElement('td');
+        dateCell.textContent = item.date;
+        kursspanneRow.appendChild(dateCell);
+        
+        const spanneCell = document.createElement('td');
+        spanneCell.textContent = kursspanneValue;
+        kursspanneRow.appendChild(spanneCell);
+        
+        kursspanneTbody.appendChild(kursspanneRow);
+    });
+
+    // Existing rows are retained  // Clear existing rows
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                ['name', 'date', 'open', 'high', 'low', 'close', 'volume'].forEach(key => {
+                    const cell = document.createElement('td');
+                    cell.textContent = key === "name" ? stockSymbol : (item[key] || '-');
+                    row.appendChild(cell);
+                });
+                tbody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error('There was an error fetching the data:', error);
+        });
+    }
+</script>
+<script>  function calculatePositionSize() {
+    // Werte aus den Eingabefeldern auslesen
+    var kontostand = parseFloat(document.getElementById("kontostand").value.replace(",", "."));
+    var kursrisiko = parseFloat(document.getElementById("kursrisiko").value.replace(",", "."));
+
+    // Positionsgröße (Stückzahl) berechnen
+    var prozentsatz = 1; // 1% des Kontostands
+    var stückzahl = (kontostand * prozentsatz / 100) / kursrisiko;
+
+    // Ergebnis anzeigen
+    document.getElementById("stückzahl").innerHTML = stückzahl;
+  }
+  </script>
+<br/><script>
+        function analyse() {
+            var aktiename = document.getElementById("aktiename").value;
+            var kursspanneA = parseFloat(document.getElementById("kursspanneA").value);
+            var kursspanneB = parseFloat(document.getElementById("kursspanneB").value);
+            var kursA = parseFloat(document.getElementById("kursA").value);
+            var kursB = parseFloat(document.getElementById("kursB").value);
+            
+            document.getElementById("aktienameTd").textContent = aktiename;
+            document.getElementById("kursspanneATd").textContent = kursspanneA.toFixed(2);
+            document.getElementById("kursspanneBTd").textContent = kursspanneB.toFixed(2);
+            document.getElementById("kursATd").textContent = kursA.toFixed(2);
+            document.getElementById("kursBTd").textContent = kursB.toFixed(2);
+            
+            var volatilitaetTd = document.getElementById("volatilitaetTd");
+            if (kursspanneA < kursspanneB) {
+                volatilitaetTd.textContent = "GO";
+                volatilitaetTd.classList.add("green");
+            } else if (kursspanneA > kursspanneB) {
+volatilitaetTd.textContent = "NO";
+volatilitaetTd.classList.add("red");
+} else {
+volatilitaetTd.textContent = "-";
+}        var trendTd = document.getElementById("trendTd");
+        var ergebnis = kursA - kursB;
+        if (ergebnis < 0) {
+            trendTd.textContent = "SHORT";
+            trendTd.classList.add("red");
+        } else if (ergebnis > 0) {
+            trendTd.textContent = "LONG";
+            trendTd.classList.add("green");
+        } else {
+            trendTd.textContent = "-";
+        }
+        
+        // Formular zurücksetzen
+        document.getElementById("aktiename").value = "";
+        document.getElementById("kursspanneA").value = "";
+        document.getElementById("kursspanneB").value = "";
+        document.getElementById("kursA").value = "";
+        document.getElementById("kursB").value = "";
+        
+        // Ergebnistabelle anzeigen
+        document.getElementById("ergebnisTabelle").style.display = "table";
+    }
+</script>
+<table id="ergebnisTabelle" style="display: none;">
+<tr>
+<th>Aktiename</th>
+<th>Kursspanne A</th>
+<th>Kursspanne B</th>
+<th>Volatilität</th>
+<th>Kurs A</th>
+<th>Kurs B</th>
+<th>Trend</th>
+</tr>
+<tr>
+<td id="aktienameTd"></td>
+<td id="kursspanneATd"></td>
+<td id="kursspanneBTd"></td>
+<td id="volatilitaetTd"></td>
+<td id="kursATd"></td>
+<td id="kursBTd"></td>
+<td id="trendTd"></td>
+</tr>
+</table>
+<form>
+        Aktiename: <input id="aktiename" type="text"/><br/>
+        Kursspanne A: <input id="kursspanneA" step="0.01" type="number"/><br/>
+        Kursspanne B: <input id="kursspanneB" step="0.01" type="number"/><br/>
+        Kurs A: <input id="kursA" step="0.01" type="number"/><br/>
+        Kurs B: <input id="kursB" step="0.01" type="number"/><br/>
+<button onclick="analyse()" type="button">Analyse durchführen</button>
+</form>
+<p>Kurspanne A = letztes High - Low / Kursspanne B = vorletztes High - Low / Kurs A = letzter Close / Kurs B drittletzter Close</p><h1>KURSSPANNE</h1>
+<table border="1" id="kursspanneData"><thead><tr><th>Kürzel</th><th>Name</th><th>Datum</th><th>Kursspanne</th></tr></thead><tbody></tbody></table><script>
+          function calculateEntry() {
+              var highKurs = parseFloat(document.getElementById("highKurs").value);
+              var lowKurs = parseFloat(document.getElementById("lowKurs").value);
+              
+              var longKurs, shortKurs;
+              
+              if (highKurs > lowKurs) {
+                  longKurs = highKurs;
+                  shortKurs = lowKurs;
+              } else {
+                  longKurs = lowKurs;
+                  shortKurs = highKurs;
+              }
+              
+              document.getElementById("longKurs").textContent = longKurs.toFixed(2);
+              document.getElementById("shortKurs").textContent = shortKurs.toFixed(2);
+          }
+      </script><script>
+        function determineStops() {
+            var kerzentief = parseFloat(document.getElementById("kerzentief").value);
+            var kerzenhoch = parseFloat(document.getElementById("kerzenhoch").value);
+            
+            var longStop = kerzentief;
+            var shortStop = kerzenhoch;
+            
+            document.getElementById("longStop").textContent = longStop.toFixed(2);
+            document.getElementById("shortStop").textContent = shortStop.toFixed(2);
+        }
+    </script><script>
+        function calculateNewQuantity() {
+          // Werte aus den Eingabefeldern auslesen
+          var anfangsrisiko = parseFloat(document.getElementById("anfangsrisiko").value.replace(",", "."));
+          var aktuellerKurs = parseFloat(document.getElementById("aktuellerKurs").value.replace(",", "."));
+          var stopp = parseFloat(document.getElementById("stopp").value.replace(",", "."));
+    
+          // Neue Stückzahl berechnen
+          var neueStückzahl = anfangsrisiko / (aktuellerKurs - stopp);
+    
+          // Ergebnis anzeigen
+          document.getElementById("neueStückzahl").innerHTML = neueStückzahl.toFixed(2);
+        }
+      </script></body>
+</html>
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Positionsgröße von Aktien</title>
+<script>
+    function calculatePositionSize() {
+      // Werte aus den Eingabefeldern auslesen
+      var kontostand = parseFloat(document.getElementById("kontostand").value.replace(",", "."));
+      var kursrisiko = parseFloat(document.getElementById("kursrisiko").value.replace(",", "."));
+
+      // Positionsgröße (Stückzahl) berechnen
+      var prozentsatz = 1; // 1% des Kontostands
+      var stückzahl = (kontostand * prozentsatz / 100) / kursrisiko;
+
+      // Ergebnis anzeigen
+      document.getElementById("stückzahl").innerHTML = stückzahl;
+    }
+  </script>
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 20px;
+            line-height: 1.6;
+            background-color: #f4f4f7;
+            color: #333;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            font-size: 22px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            padding: 10px 0;
+            position: relative;
+            font-weight: 500;
+        }
+        
+        li:before {
+            content: '\2022';
+            color: #3498db;
+            font-size: 30px;
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+</head></head>
+<body>
+<h1>POSITIONSGRÖSSE</h1><br/><p>Kursrisiko = Kursspanne</p>
+<label for="kontostand">Kontostand:</label>
+<input id="kontostand" type="text"/><br>
+<label for="kursrisiko">Kursrisiko:</label>
+<input id="kursrisiko" type="text"/><br/>
+<button onclick="calculatePositionSize()">Berechnen</button>
+<p>Positionsgröße (Stückzahl): <span id="stückzahl"></span></p>
+</br></body>
+</html><!DOCTYPE html>
+
+<html>
+<head>
+<title>Stopp-Bestimmung beim Aktienhandel</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 20px;
+            line-height: 1.6;
+            background-color: #f4f4f7;
+            color: #333;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        button {
+            display: block;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+<h1>ENTRY High/Low</h1>
+<table>
+<tr>
+<th>High</th>
+<th>Low</th>
+<th>Long</th>
+<th>Short</th>
+</tr>
+<tr>
+<td><input id="highKurs" step="0.01" type="number"/></td>
+<td><input id="lowKurs" step="0.01" type="number"/></td>
+<td id="longKurs"></td>
+<td id="shortKurs"></td>
+</tr>
+</table>
+<button onclick="calculateEntry()">Einstiegskurs berechnen</button>
+<script>
+        function calculateEntry() {
+            var highKurs = parseFloat(document.getElementById("highKurs").value);
+            var lowKurs = parseFloat(document.getElementById("lowKurs").value);
+            
+            // Zeige den höheren Wert bei LONG
+            document.getElementById("longKurs").textContent = Math.max(highKurs, lowKurs).toFixed(2);
+
+            // Zeige den niedrigeren Wert bei SHORT
+            document.getElementById("shortKurs").textContent = Math.min(highKurs, lowKurs).toFixed(2);
+        }
+
+        function determineStops() {
+            var kerzentief = parseFloat(document.getElementById("kerzentief").value);
+            var kerzenhoch = parseFloat(document.getElementById("kerzenhoch").value);
+            
+            var longStop = kerzentief;
+            var shortStop = kerzenhoch;
+            
+            document.getElementById("longStop").textContent = longStop.toFixed(2);
+            document.getElementById("shortStop").textContent = shortStop.toFixed(2);
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>CONSULTING Gewinnmitnahme</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 20px;
+            line-height: 1.6;
+            background-color: #f4f4f7;
+            color: #333;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            text-align: left;
+            margin: 0 auto;
+        }
+
+        label, input, span {
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input[type="button"] {
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        input[type="button"]:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+<h1>GEWINNMITNAHME</h1>
+<form id="stockForm">
+<label for="stockName">Aktienname:</label>
+<input id="stockName" required="" type="text"/><br/>
+<label for="currentPrice">Aktueller Kurs:</label>
+<input id="currentPrice" required="" step="0.01" type="number"/><br/>
+<label for="entryPrice">Einstiegskurs:</label>
+<input id="entryPrice" required="" step="0.01" type="number"/><br/>
+<label for="accountBalance">Kontostand:</label>
+<input id="accountBalance" required="" step="0.01" type="number"/><br/>
+<input onclick="calculate()" type="button" value="Berechnen"/><br/>
+<label for="riskUnit">1R:</label>
+<span id="riskUnitResult"></span><br/>
+<label for="newQuantity">Neue Stückzahl:</label>
+<span id="newQuantityResult"></span><br/>
+</form>
+<script>
+        function calculate() {
+            const currentPrice = parseFloat(document.getElementById("currentPrice").value);
+            const entryPrice = parseFloat(document.getElementById("entryPrice").value);
+            const accountBalance = parseFloat(document.getElementById("accountBalance").value);
+
+            // Berechnung 1R (1% des Kontostands)
+            const onePercentOfBalance = 0.01 * accountBalance;
+            document.getElementById("riskUnitResult").innerText = onePercentOfBalance.toFixed(2) + " EUR";
+
+            // Berechnung der neuen Stückzahl
+            const riskAmount = onePercentOfBalance / (currentPrice - entryPrice);
+            document.getElementById("newQuantityResult").innerText = Math.floor(riskAmount) + " Stück";
+        }
+    </script>
+</body>
+<head>
+<style>
+            body {
+                font-family: 'Roboto', sans-serif;
+                font-size: 18px;
+                background-color: #f4f4f7;
+                color: #333;
+                padding: 20px;
+            }
+            label, input, button {
+                font-size: 18px;
+                margin: 10px;
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                background: #fff;
+            }
+            button {
+                background-color: #3498db;
+                color: #fff;
+                cursor: pointer;
+            }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            th, td {
+                border: 1px solid #ccc;
+                padding: 10px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+        </style>
+</head>
+<body style="">
+<h1 style="">DE FACTO Trade</h1>
+<table>
+<tr>
+<th>Trend</th>
+<th>Einstiegskurs</th>
+<th>Stopp</th>
+<th>Stückzahl</th>
+<th>Dauer</th>
+</tr>
+<tr>
+<td>
+<select>
+<option value="long">LONG</option><option value="short">SHORT</option></select>
+</td>
+<td><input type="number"/></td>
+<td><input type="number"/></td>
+<td><input type="number"/></td>
+<td>
+<select>
+<option value="3 Tage">3 Tage</option><option value="3 Wochen">3 Wochen</option><option value="3 Monate">3 Monate</option></select>
+</td>
+</tr>
+</table>
+</body>
+</html>
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Stock Volume Analysis</title>
+<script>
+        function analyzeVolume() {
+            // Get the volume values from the table
+            var volumeA = parseInt(document.getElementById('volumeA').value);
+            var volumeB = parseInt(document.getElementById('volumeB').value);
+            var volumeC = parseInt(document.getElementById('volumeC').value);
+            
+            // Initialize result variable
+            var result = "NO";
+            
+            // Check the conditions
+            if (volumeB > volumeA && volumeB > volumeC) {
+                result = "GO";
+            }
+            
+            // Display the result
+            document.getElementById('result').innerHTML = result;
+        }
+    </script>
+</head>
+<body>
+<h1>Stock Volume Analysis</h1>
+<table border="1">
+<tr>
+<th>Volume A</th>
+<th>Volume B</th>
+<th>Volume C</th>
+</tr>
+<tr>
+<td><input id="volumeA" type="number"/></td>
+<td><input id="volumeB" type="number"/></td>
+<td><input id="volumeC" type="number"/></td>
+</tr>
+</table>
+<button onclick="analyzeVolume()">Analyze</button>
+<p>Result: <span id="result"></span></p>
+</body>
+<br/>Volumen A = aktuelles / Volumen B = vorletztes / Volumen C = drittletztes
+</html>
